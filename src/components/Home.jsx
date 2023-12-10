@@ -58,7 +58,7 @@ const Home = ({
   const loadOptions = async (inputValue) => {
     try {
       const response = await axios.get(
-        `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${
+        `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${
           import.meta.env.VITE_API_KEY
         }&q=${inputValue}`
       );

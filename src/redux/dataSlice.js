@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://dataservice.accuweather.com";
+const BASE_URL = "https://dataservice.accuweather.com";
 
 export const cityLocationFetch = createAsyncThunk(
   "data/fetchData",
   async (city = "Tel Aviv") => {
-    console.log(city);
     const response = await axios.get(
-      // "http://localhost:5173/citiesData.json"
       `${BASE_URL}/locations/v1/cities/autocomplete?apikey=${
         import.meta.env.VITE_API_KEY
       }&q=${city}`
@@ -21,9 +19,7 @@ export const cityLocationFetch = createAsyncThunk(
 export const currentWeatherFetch = createAsyncThunk(
   "data/fetchData2",
   async (key = 215854) => {
-    console.log(key);
     const response = await axios.get(
-      // "http://localhost:5173/cityDetails.json"
       `${BASE_URL}/currentconditions/v1/${key}?apikey=${
         import.meta.env.VITE_API_KEY
       }`
@@ -36,9 +32,7 @@ export const currentWeatherFetch = createAsyncThunk(
 export const fiveDaysForecastFetch = createAsyncThunk(
   "data/fetchData3",
   async (key = 215854) => {
-    console.log(key);
     const response = await axios.get(
-      // "http://localhost:5173/5Days.json"
       `${BASE_URL}/forecasts/v1/daily/5day/${key}?apikey=${
         import.meta.env.VITE_API_KEY
       }&metric=true`
