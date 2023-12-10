@@ -1,5 +1,4 @@
 import { useState } from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 
 import axios from "axios";
@@ -46,23 +45,6 @@ const Home = ({
     }
   };
 
-  // const saveToLocalStorage = () => {
-  //   const newArr = getFavorites();
-  //   const valueExists = newArr?.some(
-  //     (f) => f.cityName === cityLocation.LocalizedName
-  //   );
-
-  //   if (!valueExists) {
-  //     newArr.push({
-  //       id: cityLocation.Key,
-  //       cityName: cityLocation.LocalizedName,
-  //       curWeather,
-  //     });
-
-  //     saveFavorites(newArr);
-  //   }
-  // };
-
   const removeDuplicate = (arr) => {
     const result = arr.reduce((unique, o) => {
       if (!unique.some((obj) => obj.label === o.label)) {
@@ -73,9 +55,7 @@ const Home = ({
     return result;
   };
 
-  // טוען את האופציות לבחירה
   const loadOptions = async (inputValue) => {
-    console.log("Loading");
     try {
       const response = await axios.get(
         `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${

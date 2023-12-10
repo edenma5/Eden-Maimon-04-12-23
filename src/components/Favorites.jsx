@@ -1,8 +1,4 @@
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, Card, CardActions } from "@mui/material";
-import Button2 from "@mui/joy/Button";
+import { CardActions } from "@mui/material";
 
 import { useState } from "react";
 import Buttons from "./Buttons";

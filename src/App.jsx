@@ -4,15 +4,13 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Favorites from "./components/Favorites";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   cityLocationFetch,
   currentWeatherFetch,
   fiveDaysForecastFetch,
 } from "./redux/dataSlice";
-import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import ErrorsAlert from "./components/ErrorsAlert";
+import { useEffect, useState } from "react";
 
 function App() {
   const [isFavoriteExsist, setIsFavoriteExsist] = useState(false);
@@ -22,7 +20,6 @@ function App() {
     const favoritesData = getFavoritesFromLS();
 
     const valueExists = favoritesData?.some((f) => f.cityName === currentValue);
-    console.log(valueExists);
     setIsFavoriteExsist(valueExists);
   };
 
@@ -42,15 +39,11 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("getOnStartData");
     checkExsistFavorite("Tel Aviv");
     getOnStartData();
   }, []);
 
-  console.log("a render");
-
   const getForecast = (key) => {
-    console.log("getForecast");
     if (key) {
       dispatch(currentWeatherFetch(key));
       dispatch(fiveDaysForecastFetch(key));
@@ -58,7 +51,6 @@ function App() {
   };
 
   const getCityKey = (inputValue) => {
-    console.log("getCityKey");
     dispatch(cityLocationFetch(inputValue));
     checkExsistFavorite(inputValue);
   };

@@ -20,7 +20,6 @@ const SearchBox = ({
   };
 
   const handleOnChange = (e, value) => {
-    console.log(value);
     getCityKey(value.label);
     getForecast(value.id);
     setValue(value);
