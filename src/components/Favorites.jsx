@@ -5,14 +5,16 @@ import { Button, Card, CardActions } from "@mui/material";
 import Button2 from "@mui/joy/Button";
 
 import { useState } from "react";
+import Buttons from "./Buttons";
 
-const Favorites = ({ getFavorites, saveFavorites }) => {
+const Favorites = ({
+  getFavorites,
+  saveFavorites,
+  setIsFavoriteExsist,
+  getForecast,
+  getCityKey,
+}) => {
   const [key, setKey] = useState(0);
-  const [alert, setAlert] = useState(false);
-
-  function alertPopUp() {
-    setAlert(true);
-  }
 
   const deleteHandle = (cityName) => {
     const newArr = getFavorites();
@@ -21,85 +23,74 @@ const Favorites = ({ getFavorites, saveFavorites }) => {
 
     saveFavorites(newArr);
     setKey((k) => ++k);
-    setAlert(false);
+    setIsFavoriteExsist(false);
   };
 
   return (
     <>
       <section
         key={key}
-        className=" bg-slate-50 py-10 px-8 my-10 mx-14 border-2"
+        className="bg-stone-50/30 py-10 px-4 my-8 mx-auto rounded-lg shadow-inner w-full xl:w-4/5 2xl:max-w-screen-2xl"
       >
-        <div className="mb-10">
-          <h2 className="text-center capitalize font-bold text-lg">
+        <div className="mb-7">
+          <h2 className="text-center capitalize font-bold text-2xl 2xl:text-4xl tracking-wider">
             favorites
           </h2>
         </div>
 
-        <div className="flex items-start flex-wrap justify-center gap-8 ">
+        <div className="flex items-start flex-wrap justify-start xl:justify-center gap-4 2xl:gap-11">
           {getFavorites()?.map((favorite, i) => {
             return (
-              <Card
-                sx={{ width: 220, height: 350 }}
+              <div
                 key={i}
-                className="flex flex-col items-center"
+                className="flex flex-col items-center py-3 2xl:py-6 px-5 w-40 2xl:w-72 bg-stone-50/75 rounded-xl"
               >
-                <CardMedia
-                  sx={{ height: 120 }}
-                  component="img"
-                  height="20"
-                  image="../../assets/images/day.avif"
-                  alt="green iguana"
-                />
-                <CardContent className="flex flex-col justify-center items-center text-center">
-                  <Typography gutterBottom variant="h6" component="div">
-                    {favorite.cityName}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                <p className="text-md lg:text-lg 2xl:text-3xl">
+                  {favorite.cityName}
+                </p>
+                <div className="pt-4 2xl:pt-6 w-full h-24 2xl:h-36">
+                  <img
+                    className="opacity-60 rounded-lg object-contain"
+                    src={`${
+                      favorite.curWeather.IsDayTime
+                        ? "../../assets/images/day.png"
+                        : "../../assets/images/night.png"
+                    }`}
+                    alt="Favorite Image"
+                  />
+                </div>
+
+                <div className="flex justify-center min-w-full mt-1 lg:mt-3 2xl:mt-20 -mb-6 2xl:-mb-4 py-6 relative">
+                  <img
+                    className="absolute top-1 2xl:-top-1 w-18 2xl:w-28 opacity-50 z-0"
+                    src={`../../assets/icons/${favorite.curWeather.WeatherIcon}.png`}
+                    alt="Weather Icon"
+                  />
+                  <p className="text-md 2xl:text-2xl font-extralight relative">
                     {favorite.curWeather.WeatherText}
-                  </Typography>
-                </CardContent>
+                  </p>
+                </div>
+
+                <div className="mt-4 mb-2">
+                  <span className="text-md 2xl:text-2xl">
+                    {favorite.curWeather.Temperature.Metric.Value}
+                    <img
+                      className="inline w-7 2xl:w-12 max-w-4xl -mx-2 2xl:-mx-3 -mt-2"
+                      src="../../assets/icons/C.svg"
+                      alt="degrees icon"
+                    />
+                  </span>
+                </div>
+
                 <CardActions className="mt-auto">
-                  <Button
-                    size="md"
-                    className="capitalize"
-                    color="error"
-                    onClick={() => alertPopUp()}
-                  >
-                    Delete
-                  </Button>
-
-                  {alert && (
-                    <>
-                      <div className="w-screen h-screen bg-black opacity-20 absolute left-0 top-0"></div>
-                      <div className=" bg-slate-50 py-5 px-16 absolute flex flex-col justify-center top-2/3 left-1/2 -translate-y-2/4 -translate-x-2/4">
-                        <p className="text-center p-2">{`are you sure delete?`}</p>
-
-                        <div className=" flex gap-8 py-2 justify-center">
-                          <Button2
-                            color="success"
-                            onClick={() => deleteHandle(favorite.cityName)}
-                            size="md"
-                            variant="soft"
-                            className="capitalize"
-                          >
-                            yes
-                          </Button2>
-                          <Button2
-                            color="danger"
-                            onClick={() => setAlert(false)}
-                            size="md"
-                            variant="soft"
-                            className="capitalize"
-                          >
-                            no
-                          </Button2>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <Buttons
+                    favorite={favorite}
+                    deleteHandle={deleteHandle}
+                    getForecast={getForecast}
+                    getCityKey={getCityKey}
+                  />
                 </CardActions>
-              </Card>
+              </div>
             );
           })}
         </div>

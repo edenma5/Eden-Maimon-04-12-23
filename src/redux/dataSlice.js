@@ -5,7 +5,7 @@ const BASE_URL = "http://dataservice.accuweather.com";
 
 export const cityLocationFetch = createAsyncThunk(
   "data/fetchData",
-  async (city = "tel aviv") => {
+  async (city = "Tel Aviv") => {
     console.log(city);
     const response = await axios.get(
       // "http://localhost:5173/citiesData.json"
@@ -41,7 +41,7 @@ export const fiveDaysForecastFetch = createAsyncThunk(
       // "http://localhost:5173/5Days.json"
       `${BASE_URL}/forecasts/v1/daily/5day/${key}?apikey=${
         import.meta.env.VITE_API_KEY
-      }`
+      }&metric=true`
     );
 
     return response.data;

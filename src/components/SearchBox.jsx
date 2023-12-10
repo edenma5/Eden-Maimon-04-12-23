@@ -10,28 +10,34 @@ const SearchBox = ({
   setInputValue,
   getOptions,
 }) => {
+  const handleInputChange = (e, value) => {
+    const isValidInput = /^[a-zA-Z\s]*$/.test(value);
+
+    if (isValidInput || value === "") {
+      getOptions();
+      setInputValue(value);
+    }
+  };
+
+  const handleOnChange = (e, value) => {
+    console.log(value);
+    getCityKey(value.label);
+    getForecast(value.id);
+    setValue(value);
+  };
+
   return (
-    <div>
+    <div className="flex justify-center mt-10">
       <Autocomplete
         placeholder="Search City"
         isOptionEqualToValue={(option, value) => option.title === value.title}
         options={options ? options : [{ label: "Loading...", id: 0 }]}
         value={value}
-        onChange={(e, newValue) => {
-          console.log(newValue.label);
-          console.log(inputValue);
-          setValue(newValue);
-          getCityKey(newValue.label);
-          getForecast();
-        }}
+        onChange={(e, value) => handleOnChange(e, value)}
         disableClearable
+        freeSolo
         inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          console.log(newInputValue);
-          setInputValue(newInputValue);
-          getOptions();
-        }}
-        // defaultValue={"tel aviv"}
+        onInputChange={handleInputChange}
         sx={{ width: 300 }}
       />
     </div>

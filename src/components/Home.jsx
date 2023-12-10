@@ -6,33 +6,62 @@ import axios from "axios";
 import SearchBox from "./SearchBox";
 
 import { useSelector } from "react-redux";
+import ErrorsAlert from "./ErrorsAlert";
 
-const Home = ({ getFavorites, saveFavorites, getForecast, getCityKey }) => {
+const Home = ({
+  getFavorites,
+  saveFavorites,
+  getForecast,
+  getCityKey,
+  isFavoriteExsist,
+  setIsFavoriteExsist,
+}) => {
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  const cityLocation = useSelector((state) => state.data.cityLocation);
+  let { curWeather, fiveDaysForecast, loading, error, cityLocation } =
+    useSelector((state) => state.data);
 
-  const { curWeather, fiveDaysForecast, loading, error } = useSelector(
-    (state) => state.data
-  );
+  const handelLocalStorage = () => {
+    if (isFavoriteExsist) {
+      const newArr = getFavorites();
+      const indexToRemove = newArr.findIndex(
+        (f) => f.cityName === cityLocation.LocalizedName
+      );
+      newArr.splice(indexToRemove, 1);
+      saveFavorites(newArr);
 
-  const saveToLocalStorage = () => {
-    const newArr = getFavorites();
-    const valueExists = newArr?.some(
-      (f) => f.cityName === cityLocation.LocalizedName
-    );
-
-    if (!valueExists) {
+      setIsFavoriteExsist(false);
+    } else {
+      const newArr = getFavorites();
       newArr.push({
+        id: cityLocation.Key,
         cityName: cityLocation.LocalizedName,
         curWeather,
       });
-
       saveFavorites(newArr);
+
+      setIsFavoriteExsist(true);
     }
   };
+
+  // const saveToLocalStorage = () => {
+  //   const newArr = getFavorites();
+  //   const valueExists = newArr?.some(
+  //     (f) => f.cityName === cityLocation.LocalizedName
+  //   );
+
+  //   if (!valueExists) {
+  //     newArr.push({
+  //       id: cityLocation.Key,
+  //       cityName: cityLocation.LocalizedName,
+  //       curWeather,
+  //     });
+
+  //     saveFavorites(newArr);
+  //   }
+  // };
 
   const removeDuplicate = (arr) => {
     const result = arr.reduce((unique, o) => {
@@ -53,27 +82,22 @@ const Home = ({ getFavorites, saveFavorites, getForecast, getCityKey }) => {
           import.meta.env.VITE_API_KEY
         }&q=${inputValue}`
       );
-      const options = response?.data?.map((city, i) => {
+      const options = response?.data?.map((city) => {
         return {
           label: `${city.LocalizedName}`,
           id: `${city.Key}`,
         };
       });
       return removeDuplicate(options);
-      // return options;
     } catch (e) {
-      console.log(e);
+      error = e.message;
     }
   };
 
   const getOptions = async () => {
-    console.log("getOptions");
-
     const res = await loadOptions(inputValue);
     setOptions(res);
   };
-
-  console.log(cityLocation);
 
   return (
     <>
@@ -88,45 +112,83 @@ const Home = ({ getFavorites, saveFavorites, getForecast, getCityKey }) => {
         getOptions={getOptions}
       />
 
-      {!loading && (
-        <section className="home__weather bg-slate-50 py-4 px-8 border-2">
-          <div className="flex justify-between items-center">
-            <div className="border-4 flex flex-col w-max p-2">
-              <h4>{cityLocation?.LocalizedName}</h4>
-              <div>
+      {error && <ErrorsAlert errorMessage={error} />}
+
+      {cityLocation.LocalizedName && !error && (
+        <section className="bg-stone-50/30 py-6 px-4 my-9 mx-auto rounded-lg shadow-inner w-full xl:w-4/5 2xl:max-w-screen-2xl">
+          <div className="flex justify-between md:px-8 p-3">
+            <div className="flex gap-4 2xl:gap-8">
+              <h4 className="font-bold text-3xl 2xl:text-6xl text-center tracking-wider">
+                {cityLocation?.LocalizedName}
+              </h4>
+              <div className="flex items-center text-lg 2xl:text-3xl">
                 <span>{curWeather?.Temperature.Metric.Value} </span>
-                <span>{curWeather?.Temperature.Metric.Unit}</span>
+                <img
+                  className="inline w-9 2xl:w-14 max-w-4xl -mx-2 -mt-1"
+                  src="../../assets/icons/C.svg"
+                  alt="degrees icon"
+                />
               </div>
             </div>
-            <div>
-              <button onClick={saveToLocalStorage}>
-                {/* <FavoriteBorderIcon /> */}
-                <MdFavorite className="text-pink-600 text-3xl" />
-                <MdFavoriteBorder className="text-pink-600 text-3xl" />
-              </button>
-            </div>
+            <button onClick={handelLocalStorage}>
+              {isFavoriteExsist ? (
+                <MdFavorite className="text-pink-600 text-3xl 2xl:text-5xl" />
+              ) : (
+                <MdFavoriteBorder className="text-pink-600 text-3xl 2xl:text-5xl" />
+              )}
+            </button>
           </div>
 
-          <div className="flex justify-center py-4">
-            <p>{curWeather?.WeatherText}</p>
+          <div className="flex justify-center py-10 2xl:my-5 relative">
+            <img
+              className="absolute top-3 2xl:top-1 w-28 md:w-24 2xl:w-36 opacity-60 z-0"
+              src={`../../assets/icons/${curWeather?.WeatherIcon}.png`}
+              alt="Weather Icon"
+            />
+            <p className="text-3xl 2xl:text-5xl font-extralight relative">
+              {curWeather?.WeatherText}
+            </p>
           </div>
 
-          <div className="flex justify-center items-center p-2 gap-6">
+          <div className="flex justify-start xl:justify-center items-center p-3 gap-4 2xl:gap-14 overflow-scroll">
             {fiveDaysForecast.DailyForecasts?.map((d, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center border-2 px-2 py-5"
+                className="flex flex-col gap-4 w-48 2xl:gap-6 items-center min-w-fit py-3 2xl:py-6 px-8 2xl:w-52 bg-stone-50/75 rounded-xl"
               >
-                <p>
+                <p className="text-md md:text-lg xl:text-xl 2xl:text-3xl">
                   {new Date(d.Date).toLocaleString("en-US", {
                     weekday: "long",
                   })}
                 </p>
-                <div>
-                  <p>
-                    {d.Temperature.Minimum.Value} -{" "}
+                <div className="py-2">
+                  <img
+                    className="w-16 2xl:w-32"
+                    src={`../../assets/icons/${d.Day.Icon}.png`}
+                    alt="Weather Icon"
+                  />
+                </div>
+
+                <div className="flex items-start gap-1">
+                  <span className="text-sm md:text-md lg:text-lg 2xl:text-2xl">
                     {d.Temperature.Maximum.Value}
-                  </p>
+                    <img
+                      className="inline w-5 2xl:w-12 max-w-4xl -mx-1 -mt-2"
+                      src="../../assets/icons/C.svg"
+                      alt="degrees icon"
+                    />
+                  </span>
+                  <span className="text-md font-extralight text-gray-600 -ml-1 -mt-1">
+                    /
+                  </span>
+                  <span className="text-sm lg:text-md 2xl:text-xl font-light text-gray-600 mt-1">
+                    {d.Temperature.Minimum.Value}
+                    <img
+                      className="inline w-4 2xl:w-10 max-w-4xl -mx-1 -mt-2 opacity-50"
+                      src="../../assets/icons/C.svg"
+                      alt="degrees icon"
+                    />
+                  </span>
                 </div>
               </div>
             ))}
