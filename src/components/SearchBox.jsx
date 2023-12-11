@@ -15,7 +15,7 @@ const SearchBox = ({
 
     if (isValidInput || value === "") {
       getOptions();
-      setInputValue(value);
+      setInputValue(() => value);
     }
   };
 

@@ -77,7 +77,7 @@ const Home = ({
 
   const getOptions = async () => {
     const res = await loadOptions(inputValue);
-    setOptions(res);
+    setOptions(() => res);
   };
 
   return (
