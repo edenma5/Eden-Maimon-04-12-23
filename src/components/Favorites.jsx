@@ -59,7 +59,7 @@ const Favorites = ({
                 <div className="flex justify-center min-w-full mt-1 lg:mt-3 2xl:mt-20 -mb-6 2xl:-mb-4 py-6 relative">
                   <img
                     className="absolute top-1 2xl:-top-1 w-18 2xl:w-28 opacity-50 z-0"
-                    src={`../../assets/icons/${favorite.curWeather.WeatherIcon}.png`}
+                    src={`../../assets/icons/icon-${favorite.curWeather.WeatherIcon}.png`}
                     alt="Weather Icon"
                   />
                   <p className="text-md 2xl:text-2xl font-extralight relative">
@@ -72,7 +72,7 @@ const Favorites = ({
                     {favorite.curWeather.Temperature.Metric.Value}
                     <img
                       className="inline w-7 2xl:w-12 max-w-4xl -mx-2 2xl:-mx-3 -mt-2"
-                      src="../../assets/icons/C.svg"
+                      src="../../assets/icons/icon-c.svg"
                       alt="degrees icon"
                     />
                   </span>
