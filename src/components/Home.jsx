@@ -105,7 +105,7 @@ const Home = ({
                 <span>{curWeather?.Temperature.Metric.Value} </span>
                 <img
                   className="inline w-9 2xl:w-14 max-w-4xl -mx-2 -mt-1"
-                  src="../../public/assets/icons/icon-c.svg"
+                  src="../../assets/icons/icon-c.svg"
                   alt="degrees icon"
                 />
               </div>
@@ -122,7 +122,7 @@ const Home = ({
           <div className="flex justify-center py-10 2xl:my-5 relative">
             <img
               className="absolute top-3 2xl:top-1 w-28 md:w-24 2xl:w-36 opacity-60 z-0"
-              src={`../../public/assets/icons/icon-${curWeather?.WeatherIcon}.png`}
+              src={`../../assets/icons/icon-${curWeather?.WeatherIcon}.png`}
               alt="Weather Icon"
             />
             <p className="text-3xl 2xl:text-5xl font-extralight relative">
@@ -144,7 +144,7 @@ const Home = ({
                 <div className="py-2">
                   <img
                     className="w-16 2xl:w-32"
-                    src={`../../public/assets/icons/icon-${d.Day.Icon}.png`}
+                    src={`../../assets/icons/icon-${d.Day.Icon}.png`}
                     alt="Weather Icon"
                   />
                 </div>
@@ -154,7 +154,7 @@ const Home = ({
                     {d.Temperature.Maximum.Value}
                     <img
                       className="inline w-5 2xl:w-12 max-w-4xl -mx-1 -mt-2"
-                      src="../../public/assets/icons/icon-c.svg"
+                      src="../../assets/icons/icon-c.svg"
                       alt="degrees icon"
                     />
                   </span>
@@ -165,7 +165,7 @@ const Home = ({
                     {d.Temperature.Minimum.Value}
                     <img
                       className="inline w-4 2xl:w-10 max-w-4xl -mx-1 -mt-2 opacity-50"
-                      src="../../public/assets/icons/icon-c.svg"
+                      src="../../assets/icons/icon-c.svg"
                       alt="degrees icon"
                     />
                   </span>
