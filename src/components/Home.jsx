@@ -6,6 +6,7 @@ import SearchBox from "./SearchBox";
 
 import { useSelector } from "react-redux";
 import ErrorsAlert from "./ErrorsAlert";
+import icon1 from "../assets/index";
 
 const Home = ({
   getFavorites,
@@ -105,7 +106,7 @@ const Home = ({
                 <span>{curWeather?.Temperature.Metric.Value} </span>
                 <img
                   className="inline w-9 2xl:w-14 max-w-4xl -mx-2 -mt-1"
-                  src="../assets/icons/C.svg"
+                  src={icon1}
                   alt="degrees icon"
                 />
               </div>
@@ -154,7 +155,7 @@ const Home = ({
                     {d.Temperature.Maximum.Value}
                     <img
                       className="inline w-5 2xl:w-12 max-w-4xl -mx-1 -mt-2"
-                      src="../assets/icons/C.svg"
+                      src="../assets/icons/c.svg"
                       alt="degrees icon"
                     />
                   </span>
