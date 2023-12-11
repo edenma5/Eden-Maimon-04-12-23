@@ -7,10 +7,14 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
     <>
-      <header className="navbar__containter relative py-4 2xl:py-7 px-7 2xl:px-14 bg-cyan-800/50 shadow text-slate-50 text-lg 2xl:text-3xl">
+      <motion.header
+        className="navbar__containter relative py-4 2xl:py-7 px-7 2xl:px-14 bg-cyan-800/50 shadow text-slate-50 text-lg 2xl:text-3xl"
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+      >
         <nav className="flex justify-between">
           <div className="nav__logo font-bold">
-            <NavLink to="/">abra Weather App</NavLink>
+            <NavLink to="/">Weather App</NavLink>
           </div>
           <div className="nav__tabs-desktop">
             <ul className="flex gap-4 2xl:gap-10">
@@ -53,8 +57,8 @@ const Navbar = () => {
             <>
               <motion.div
                 className="w-screen h-full bg-gray-600 opacity-20 fixed left-0 top-0 bottom-0 right-0 z-50"
-                animate={{ x: [425, 0], opacity: [0, 0.2] }}
-                transition={{ duration: 0.5, ease: "easeIn" }}
+                animate={{ opacity: [0, 0.2] }}
+                transition={{ duration: 0.7, ease: "easeIn" }}
               ></motion.div>
               <motion.div
                 className="sideMenuContainer bg-slate-400"
@@ -94,7 +98,7 @@ const Navbar = () => {
             </>
           )}
         </div>
-      </header>
+      </motion.header>
     </>
   );
 };

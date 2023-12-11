@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-
 import axios from "axios";
-import SearchBox from "./SearchBox";
-
 import { useSelector } from "react-redux";
+
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { motion } from "framer-motion";
+
+import SearchBox from "./SearchBox";
 import ErrorsAlert from "./ErrorsAlert";
 
 const Home = ({
@@ -95,9 +96,17 @@ const Home = ({
       {error && <ErrorsAlert errorMessage={error} />}
 
       {cityLocation.LocalizedName && !error && (
-        <section className="bg-stone-50/30 py-6 px-4 my-9 mx-auto rounded-lg shadow-inner w-full xl:w-4/5 2xl:max-w-screen-2xl">
+        <motion.section
+          className="bg-stone-50/30 py-6 px-4 my-9 mx-auto rounded-lg shadow-inner w-full xl:w-4/5 2xl:max-w-screen-2xl"
+          animate={{ scale: [0, 1], opacity: [0, 1] }}
+          transition={{ duration: 0.5, ease: "easeIn" }}
+        >
           <div className="flex justify-between md:px-8 p-3">
-            <div className="flex gap-4 2xl:gap-8">
+            <motion.div
+              className="flex gap-4 2xl:gap-8"
+              animate={{ x: [-1000, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            >
               <h4 className="font-bold text-3xl 2xl:text-6xl text-center tracking-wider">
                 {cityLocation?.LocalizedName}
               </h4>
@@ -109,32 +118,44 @@ const Home = ({
                   alt="degrees icon"
                 />
               </div>
-            </div>
-            <button onClick={handelLocalStorage}>
+            </motion.div>
+            <motion.button
+              onClick={handelLocalStorage}
+              animate={{ x: [1000, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            >
               {isFavoriteExsist ? (
                 <MdFavorite className="text-pink-600 text-3xl 2xl:text-5xl" />
               ) : (
                 <MdFavoriteBorder className="text-pink-600 text-3xl 2xl:text-5xl" />
               )}
-            </button>
+            </motion.button>
           </div>
 
-          <div className="flex justify-center py-10 2xl:my-5 relative">
-            <img
+          <motion.div
+            className="flex justify-center py-10 2xl:my-5 relative"
+            animate={{ y: [-100, 0], opacity: [0, 1] }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          >
+            <motion.img
               className="absolute top-3 2xl:top-1 w-28 md:w-24 2xl:w-36 opacity-60 z-0"
+              animate={{ y: [-100, 0], opacity: [0, 1] }}
+              transition={{ duration: 0.9, delay: 0.4, ease: "easeIn" }}
               src={`../../assets/icons/icon-${curWeather?.WeatherIcon}.png`}
               alt="Weather Icon"
             />
             <p className="text-3xl 2xl:text-5xl font-extralight relative">
               {curWeather?.WeatherText}
             </p>
-          </div>
+          </motion.div>
 
           <div className="flex justify-start xl:justify-center items-center p-3 gap-4 2xl:gap-14 overflow-scroll">
             {fiveDaysForecast.DailyForecasts?.map((d, i) => (
-              <div
+              <motion.div
                 key={i}
                 className="flex flex-col gap-4 w-48 2xl:gap-6 items-center min-w-fit py-3 2xl:py-6 px-8 2xl:w-52 bg-stone-50/75 rounded-xl"
+                animate={{ y: [1000, 0], opacity: [0, 1] }}
+                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               >
                 <p className="text-md md:text-lg xl:text-xl 2xl:text-3xl">
                   {new Date(d.Date).toLocaleString("en-US", {
@@ -170,10 +191,10 @@ const Home = ({
                     />
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
       )}
     </>
   );

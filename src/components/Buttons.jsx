@@ -1,7 +1,9 @@
-import JoyButton from "@mui/joy/Button";
-import { Button } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import JoyButton from "@mui/joy/Button";
+import { Button } from "@mui/material";
+import { motion } from "framer-motion";
 
 const Buttons = ({ deleteHandle, favorite, getForecast, getCityKey }) => {
   const [alert, setAlert] = useState(false);
@@ -39,8 +41,16 @@ const Buttons = ({ deleteHandle, favorite, getForecast, getCityKey }) => {
       </div>
       {alert && (
         <>
-          <div className="w-screen h-full bg-black opacity-20 fixed left-0 top-0 bottom-0 right-0 z-50"></div>
-          <div className=" bg-stone-50 rounded-xl py-7 px-20 fixed flex flex-col justify-center top-2/4 left-1/2 -translate-y-2/4 -translate-x-2/4 z-50">
+          <motion.div
+            className="w-screen h-full bg-black opacity-20 fixed left-0 top-0 bottom-0 right-0 z-50"
+            animate={{ opacity: [0, 0.2] }}
+            transition={{ duration: 0.7, ease: "easeIn" }}
+          ></motion.div>
+          <motion.div
+            className=" bg-stone-50 rounded-xl py-7 px-20 fixed flex flex-col justify-center top-2/4 left-1/2 -translate-y-2/4 -translate-x-2/4 z-50"
+            animate={{ opacity: [0, 1] }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          >
             <p className="text-center p-2 capitalize lg:text-xl 2xl:text-3xl">{`are you sure to delete ${favorite.cityName}?`}</p>
 
             <div className="flex gap-8 2xl:gap-20 py-2 2xl:py-6 justify-center">
@@ -65,7 +75,7 @@ const Buttons = ({ deleteHandle, favorite, getForecast, getCityKey }) => {
                 no
               </JoyButton>
             </div>
-          </div>
+          </motion.div>
         </>
       )}
     </>

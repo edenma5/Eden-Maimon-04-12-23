@@ -1,8 +1,5 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Favorites from "./components/Favorites";
 
 import { useDispatch } from "react-redux";
 import {
@@ -10,7 +7,11 @@ import {
   currentWeatherFetch,
   fiveDaysForecastFetch,
 } from "./redux/dataSlice";
-import { useEffect, useState } from "react";
+
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Favorites from "./components/Favorites";
+import Footer from "./components/Footer";
 
 function App() {
   const [isFavoriteExsist, setIsFavoriteExsist] = useState(false);
@@ -116,6 +117,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

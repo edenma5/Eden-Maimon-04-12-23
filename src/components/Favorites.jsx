@@ -1,4 +1,5 @@
 import { CardActions } from "@mui/material";
+import { motion } from "framer-motion";
 
 import { useState } from "react";
 import Buttons from "./Buttons";
@@ -24,22 +25,30 @@ const Favorites = ({
 
   return (
     <>
-      <section
+      <motion.section
         key={key}
         className="bg-stone-50/30 py-10 px-4 my-8 mx-auto rounded-lg shadow-inner w-full xl:w-4/5 2xl:max-w-screen-2xl"
+        animate={{ scale: [0, 1], opacity: [0, 1] }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
       >
-        <div className="mb-7">
+        <motion.div
+          className="mb-7"
+          animate={{ y: [-500, 0], opacity: [0, 1] }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+        >
           <h2 className="text-center capitalize font-bold text-2xl 2xl:text-4xl tracking-wider">
             favorites
           </h2>
-        </div>
+        </motion.div>
 
         <div className="flex items-start flex-wrap justify-start xl:justify-center gap-4 2xl:gap-11">
           {getFavorites()?.map((favorite, i) => {
             return (
-              <div
+              <motion.div
                 key={i}
                 className="flex flex-col items-center py-3 2xl:py-6 px-5 w-40 2xl:w-72 bg-stone-50/75 rounded-xl"
+                animate={{ y: [1000, 0], opacity: [0, 1] }}
+                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               >
                 <p className="text-md lg:text-lg 2xl:text-3xl">
                   {favorite.cityName}
@@ -57,8 +66,10 @@ const Favorites = ({
                 </div>
 
                 <div className="flex justify-center min-w-full mt-1 lg:mt-3 2xl:mt-20 -mb-6 2xl:-mb-4 py-6 relative">
-                  <img
+                  <motion.img
                     className="absolute top-1 2xl:-top-1 w-18 2xl:w-28 opacity-50 z-0"
+                    animate={{ y: [-100, 0], opacity: [0, 1] }}
+                    transition={{ duration: 0.9, delay: 0.4, ease: "easeIn" }}
                     src={`../../assets/icons/icon-${favorite.curWeather.WeatherIcon}.png`}
                     alt="Weather Icon"
                   />
@@ -86,11 +97,11 @@ const Favorites = ({
                     getCityKey={getCityKey}
                   />
                 </CardActions>
-              </div>
+              </motion.div>
             );
           })}
         </div>
-      </section>
+      </motion.section>
     </>
   );
 };

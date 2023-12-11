@@ -8,12 +8,34 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-color: rgb(241 245 249);
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .navbar__containter {
     text-shadow: 0 0 1px #000;
+}
+
+.loadingSpinner {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    translate: -50%;
+    bottom: -12%;
+    width: 55px;
+    height: 55px;
+    background-color: rgba(132, 160, 150);
+    border: 20px double #ffffff;
 }
 
 .menuIcon {
