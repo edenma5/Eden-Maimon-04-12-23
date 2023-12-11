@@ -48,23 +48,10 @@ const dataSlice = createSlice({
     cityLocation: [],
     curWeather: null,
     fiveDaysForecast: [],
-    loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    // Handle the pending state
-    builder.addCase(cityLocationFetch.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(currentWeatherFetch.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fiveDaysForecastFetch.pending, (state) => {
-      state.loading = true;
-    });
-
-    // Handle the fulfilled state
     builder.addCase(cityLocationFetch.fulfilled, (state, action) => {
       state.loading = false;
       state.cityLocation = action.payload;
@@ -78,7 +65,6 @@ const dataSlice = createSlice({
       state.fiveDaysForecast = action.payload;
     });
 
-    // Handle the rejected state
     builder.addCase(cityLocationFetch.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message;

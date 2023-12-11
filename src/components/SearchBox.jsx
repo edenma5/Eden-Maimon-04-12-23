@@ -22,7 +22,7 @@ const SearchBox = ({
   const handleOnChange = (e, value) => {
     getCityKey(value.label);
     getForecast(value.id);
-    setValue(value);
+    setValue(() => value);
   };
 
   return (
@@ -30,7 +30,7 @@ const SearchBox = ({
       <Autocomplete
         placeholder="Search City"
         isOptionEqualToValue={(option, value) => option.title === value.title}
-        options={options ? options : [{ label: "Loading...", id: 0 }]}
+        options={options ? options : [{ label: "No Options", id: 0 }]}
         value={value}
         onChange={(e, value) => handleOnChange(e, value)}
         disableClearable

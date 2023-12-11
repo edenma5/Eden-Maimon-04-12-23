@@ -20,8 +20,9 @@ const Home = ({
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  let { curWeather, fiveDaysForecast, loading, error, cityLocation } =
-    useSelector((state) => state.data);
+  let { curWeather, fiveDaysForecast, error, cityLocation } = useSelector(
+    (state) => state.data
+  );
 
   const handelLocalStorage = () => {
     if (isFavoriteExsist) {
